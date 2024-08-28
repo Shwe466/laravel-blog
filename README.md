@@ -76,18 +76,6 @@ To get this project up and running on your local machine, follow these steps:
 4. Click on individual posts to view their details and leave comments.
 5. Edit or delete your own posts.
 
-## Contributing
-
-We welcome contributions! Please open an issue or submit a pull request with improvements, bug fixes, or new features.
-
-## License
-
-This project is open-source and available under the [MIT License](LICENSE).
-
-## Contact
-
-For any inquiries or feedback, feel free to open an issue or reach out to us at example@example.com.
-
 ---
 
 Feel free to customize this description based on your specific project details and preferences.
