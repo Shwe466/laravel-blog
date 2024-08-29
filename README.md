@@ -60,12 +60,17 @@ To get this project up and running on your local machine, follow these steps:
     php artisan migrate
     ```
 
-7. **Serve the application:**
+7. **Run seeders to populate database with fake data:**
+    ```bash
+    php artisan db:seed
+    ```
+
+8. **Serve the application:**
     ```bash
     php artisan serve
     ```
 
-8. **Access the project:**
+9. **Access the project:**
     Open your web browser and navigate to `http://localhost:8000` to view the blog application.
 
 ## Usage

@@ -9,34 +9,44 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg relative">
 
-                <form action="{{ route('posts.update', $post->id) }}" method="POST">
+                <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+                    <!-- Blog Title -->
                     <div class="mb-4">
-                        <label for="title" class="block text-sm font-medium text-gray-700">{{ __('Title') }}</label>
-                        <input type="text" name="title" id="title" class="form-input mt-1 block w-full" value="{{ old('title', $post->title) }}" required>
-                        @error('title')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
+                        <x-input-label for="title" :value="__('Title')" />
+                        <x-text-input id="title" name="title" type="text" class="form-input mt-1 block w-full" :value="old('title', $post->title)" required />
+                        <x-input-error :messages="$errors->get('title')" class="mt-2" />
                     </div>
 
+                    <!-- Blog Content -->
                     <div class="mb-4">
-                        <label for="content" class="block text-sm font-medium text-gray-700">{{ __('Content') }}</label>
-                        <textarea name="content" id="content" rows="5" class="form-textarea mt-1 block w-full" required>{{ old('content', $post->content) }}</textarea>
-                        @error('content')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
+                        <x-input-label for="content" :value="__('Content')" />
+                        <x-textarea-input id="content" name="content" rows="5" class="form-textarea mt-1 block w-full" :value="old('content', $post->content)" required />
+                        <x-input-error :messages="$errors->get('content')" class="mt-2" />
                     </div>
 
+                    <!-- Blog Image -->
                     <div class="mb-4">
-                        <label for="tags" class="block text-sm font-medium text-gray-700">{{ __('Tags') }}</label>
-                        <select name="tags[]" id="tags" class="form-multiselect mt-1 block w-full" multiple>
-                            @foreach ($tags as $tag)
-                            <option value="{{ $tag->id }}" @if(in_array($tag->id, $post->tags->pluck('id')->toArray())) selected @endif>{{ $tag->tag }}</option>
-                            @endforeach
-                        </select>
+                        <x-input-label for="image" :value="__('Image')" />
+                        <x-file-input id="image" name="image" class="mt-1 block w-full" />
+                        <x-input-error :messages="$errors->get('image')" class="mt-2" />
                     </div>
 
+                    <!-- Blog Tag -->
+                    <div class="mb-4">
+                        <x-input-label for="tags" :value="__('Tags')" />
+                        <x-select-input
+                            id="tags"
+                            name="tags[]"
+                            :options="$tags->pluck('tag', 'id')"
+                            multiple
+                            :selected="old('tags', $post->tags->pluck('id')->toArray())"
+                            class="form-multiselect mt-1 block w-full"
+                        />
+                    </div>
+
+                    <!-- Blog Buttons -->
                     <div class="flex justify-between mt-6 mb-4">
                         <x-primary-button>
                             {{ __('Update Post') }}

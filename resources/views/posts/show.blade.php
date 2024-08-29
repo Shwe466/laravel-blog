@@ -12,6 +12,13 @@
                     <div>
                         <h1 class="text-2xl font-bold mb-4">{{ $post->title }}</h1>
                         <p class="text-gray-700 mb-4">by {{ $post->user->name }} | {{ $post->created_at->diffForHumans() }}</p>
+
+                        @if ($post->image)
+                            <div class="mb-4">
+                                <img src="{{ asset('storage/images/' . $post->image) }}" alt="{{ $post->title }}" class="rounded">
+                            </div>
+                        @endif
+
                         <div class="content mb-4">
                             {{ $post->content }}
                         </div>
@@ -27,7 +34,7 @@
                         <a href="{{ route('posts.edit', $post->id) }}" class="text-gray-500 hover:text-gray-700">
                             <i class="fas fa-edit fa-lg"></i>
                         </a>
-                        <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                        <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('この記事を削除してもよろしいですか?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-500 hover:text-red-700">
@@ -67,10 +74,8 @@
                     <form action="{{ route('comments.store', $post->id) }}" method="POST">
                         @csrf
                         <div class="mb-4">
-                            <textarea name="comment" id="comment" rows="3" class="form-textarea mt-1 block w-full" required>{{ old('comment') }}</textarea>
-                            @error('comment')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                            @enderror
+                            <x-textarea-input id="comment" name="comment" rows="3" class="form-textarea mt-1 block w-full" :value="old('comment')" />
+                            <x-input-error :messages="$errors->get('comment')" class="mt-2" />
                         </div>
                         <div class="mb-4">
                             <x-primary-button>

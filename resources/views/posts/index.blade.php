@@ -8,6 +8,13 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <!-- Display success messages -->
+                @if (session('success'))
+                    <div class="mb-4 p-4 bg-indigo-50 border border-indigo-400 text-indigo-700 rounded-lg">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                
                 <button class="btn btn-primary bg-gray-800 text-white px-4 py-2 rounded mb-4 hover:bg-gray-700 focus:bg-gray-700">
                     <a href="{{ route('posts.create') }}">{{ __('Create New Post') }}</a>
                 </button>
@@ -29,7 +36,7 @@
                             <a href="{{ route('posts.edit', $post->id) }}" class="text-gray-500 hover:text-gray-700">
                                 <i class="fas fa-edit fa-lg"></i>
                             </a>
-                            <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                            <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('この記事を削除してもよろしいですか?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-500 hover:text-red-700">
