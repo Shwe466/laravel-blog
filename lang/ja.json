@@ -23,6 +23,7 @@
     "Forgot your password?": "パスワードを忘れた？",
     "Forgot Your Password?": "パスワードを忘れた？",
     "Log in": "ログイン",
+    "Log In": "ログイン",
     "Login": "ログイン",
     "Log Out": "ログアウト",
     "Logout": "ログアウト",
@@ -156,5 +157,7 @@
     "Edit Post": "記事編集画面",
     "Update Post": "記事を更新する",
     "Post deleted successfully.": "記事は正常に削除されました。",
-    "Image": "画像"
+    "Image": "画像",
+    "You need to login or register to comment on the post.": "投稿にコメントするには、ログインまたは登録する必要があります。",
+    "or": "または"
 }

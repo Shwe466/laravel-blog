@@ -8,19 +8,16 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                @if (Auth::check())
-                <!-- Members-only action buttons -->
-                    <!-- Display success messages -->
-                    @if (session('success'))
-                        <div class="mb-4 p-4 bg-indigo-50 border border-indigo-400 text-indigo-700 rounded-lg">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-                
-                    <button class="btn btn-primary bg-gray-800 text-white px-4 py-2 rounded mb-4 hover:bg-gray-700 focus:bg-gray-700">
-                        <a href="{{ route('posts.create') }}">{{ __('Create New Post') }}</a>
-                    </button>
+                <!-- Display success messages -->
+                @if (session('success'))
+                    <div class="mb-4 p-4 bg-indigo-50 border border-indigo-400 text-indigo-700 rounded-lg">
+                        {{ session('success') }}
+                    </div>
                 @endif
+                
+                <button class="btn btn-primary bg-gray-800 text-white px-4 py-2 rounded mb-4 hover:bg-gray-700 focus:bg-gray-700">
+                    <a href="{{ route('posts.create') }}">{{ __('Create New Post') }}</a>
+                </button>
 
                 @foreach ($posts as $post)
                 <div class="border rounded-lg p-4 mb-4 relative">

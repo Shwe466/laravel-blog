@@ -11,10 +11,11 @@ use Illuminate\Support\Facades\Storage;
 class PostController extends Controller
 {
     /**
-     * List all posts
+     * List all posts, handling both public and member views
      */
     public function index()
     {
+        // Display all posts, regardless of authentication
         $posts = Post::with('user', 'tags')->orderBy('created_at', 'desc')->paginate(10);
         return view('posts.index', compact('posts'));
     }
@@ -24,6 +25,11 @@ class PostController extends Controller
      */
     public function create()
     {
+        // Ensure only logged-in users can access
+        // if (!Auth::check()) {
+        //     return redirect()->route('login');
+        // }
+
         $tags = Tag::all();
         return view('posts.create', compact('tags'));
     }
@@ -33,6 +39,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',

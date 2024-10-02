@@ -5,10 +5,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
-// Redirect the root URL to the login page
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+// Redirect the root URL to the public blog list
+Route::get('/', [PostController::class, 'index'])->name('posts.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -22,9 +20,13 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('posts', PostController::class);
+    Route::resource('posts', PostController::class)->except('index', 'show'); // Exclude 'index' and 'show' from auth-protected routes
     Route::post('posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 });
+
+// Public routes for all users to see without login
+Route::get('posts', [PostController::class, 'index'])->name('posts.index'); // This line ensures GET request is handled
+Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
 // Authentication routes provided by Laravel Breeze
 require __DIR__.'/auth.php';

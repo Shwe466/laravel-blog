@@ -71,18 +71,31 @@
                     </div>
                     @endforeach
 
-                    <form action="{{ route('comments.store', $post->id) }}" method="POST">
-                        @csrf
-                        <div class="mb-4">
-                            <x-textarea-input id="comment" name="comment" rows="3" class="form-textarea mt-1 block w-full" :value="old('comment')" />
-                            <x-input-error :messages="$errors->get('comment')" class="mt-2" />
+                    @guest
+                        <div class="alert bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+                            {{ __('You need to login or register to comment on the post.') }}
+                            <a href="{{ route('login') }}" class="text-blue-500 hover:text-blue-700">
+                                {{ __('Login') }}
+                            </a>
+                            {{ __('or') }}
+                            <a href="{{ route('register') }}" class="text-blue-500 hover:text-blue-700">
+                                {{ __('Register') }}
+                            </a>
                         </div>
-                        <div class="mb-4">
-                            <x-primary-button>
-                                {{ __('Add Comment') }}
-                            </x-primary-button>
-                        </div>
-                    </form>
+                    @else
+                        <form action="{{ route('comments.store', $post->id) }}" method="POST">
+                            @csrf
+                            <div class="mb-4">
+                                <x-textarea-input id="comment" name="comment" rows="3" class="form-textarea mt-1 block w-full" :value="old('comment')" />
+                                <x-input-error :messages="$errors->get('comment')" class="mt-2" />
+                            </div>
+                            <div class="mb-4">
+                                <x-primary-button>
+                                    {{ __('Add Comment') }}
+                                </x-primary-button>
+                            </div>
+                        </form>
+                    @endguest
                 </div>
             </div>
         </div>
